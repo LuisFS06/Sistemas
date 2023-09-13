@@ -14,7 +14,7 @@ distrito char(40)
 INSERT INTO Territorio (Provincia, Canton, Distrito)
 VALUES
     ('San Jose', 'San Jose', 'Uruca'),
-    ('San Jose', 'Escazú', 'San Rafael'),
+    ('San Jose', 'EscazÃº', 'San Rafael'),
  
 
 -- Provincia de Alajuela
@@ -26,7 +26,7 @@ VALUES
 -- Provincia de Cartago
 
     ('Cartago', 'Cartago', 'Carmen'),
-    ('Cartago', 'La Unión', 'San Juan'),
+    ('Cartago', 'La UniÃ³n', 'San Juan'),
 
 
 -- Provincia de Heredia
@@ -38,19 +38,19 @@ VALUES
 -- Provincia de Guanacaste
 
     ('Guanacaste', 'Liberia', 'Mayorga'),
-    ('Guanacaste', 'Liberia', 'Cañas Dulces'),
+    ('Guanacaste', 'Liberia', 'CaÃ±as Dulces'),
 
 
 -- Provincia de Puntarenas
 
     ('Puntarenas', 'Puntarenas', 'El Roble'),
-    ('Puntarenas', 'Esparza', 'Espíritu Santo'),
+    ('Puntarenas', 'Esparza', 'EspÃ­ritu Santo'),
 
 
 -- Provincia de Limon
 
-    ('Limon', 'Limón', 'Matama'),
-    ('Limon', 'Limón', 'Valle La Estrella');
+    ('Limon', 'LimÃ³n', 'Matama'),
+    ('Limon', 'LimÃ³n', 'Valle La Estrella');
 
 -- Crear Tabla de proveedores
 
@@ -76,24 +76,24 @@ VALUES
 
 -- Tabla Intermedia territorio-proveedor
 
-CREATE TABLE territprov(
-id_terprov INT NOT NULL IDENTITY(1,1) CONSTRAINT id_terprov PRIMARY KEY,
-cedula INT NOT NULL,
-id_territorio INT NOT NULL,
-	FOREIGN KEY (id_territorio) REFERENCES Territorio(id_territorio),
-	FOREIGN KEY (cedula) REFERENCES Proveedor(cedula)
-)
+CREATE TABLE TerritorioProveedor (
+    id_territorio_prov INT NOT NULL IDENTITY(1,1) CONSTRAINT pk_TerritorioProveedor PRIMARY KEY,
+    territorio_id INT NOT NULL,
+    proveedor_cedula INT NOT NULL,
+    FOREIGN KEY (territorio_id) REFERENCES Territorio(id_territorio),
+    FOREIGN KEY (proveedor_cedula) REFERENCES Proveedor(cedula)
+);
 
 -- Insertar registros a la tabla
 
-INSERT INTO territprov(cedula, id_territorio)
+-- Insertar registros en la tabla intermedia TerritorioProveedor
+INSERT INTO TerritorioProveedor (territorio_id, proveedor_cedula)
 VALUES
-	(123456789, 1),
-    (987654320, 2),
-    (555555555, 3),
-    (999999999, 3),
-    (888888888, 8);
-
+    (1, 123456789), 
+    (2, 987654320), 
+    (3, 555555555),
+    (3, 999999999),
+    (8, 888888888); 
 
 -- Crear tabla de categorias
 
@@ -151,17 +151,18 @@ correo CHAR(40) NOT NULL
 
 INSERT INTO Cliente (cedulacl, tipocedu, nombre, direccion, correo)
 VALUES
-    (111111111, 'juridica', 'Cliente 1', 'Dirección 1', 'cliente1@example.com'),
-    (222222222, 'fisica', 'Cliente 2', 'Dirección 2', 'cliente2@example.com'),
-    (333333333, 'juridica', 'Cliente 3', 'Dirección 3', 'cliente3@example.com'),
-    (444444444, 'fisica', 'Cliente 4', 'Dirección 4', 'cliente4@example.com'),
-    (555555555, 'fisica', 'Cliente 5', 'Dirección 5', 'cliente5@example.com');
+    (111111111, 'juridica', 'Cliente 1', 'DirecciÃ³n 1', 'cliente1@example.com'),
+    (222222222, 'fisica', 'Cliente 2', 'DirecciÃ³n 2', 'cliente2@example.com'),
+    (333333333, 'juridica', 'Cliente 3', 'DirecciÃ³n 3', 'cliente3@example.com'),
+    (444444444, 'fisica', 'Cliente 4', 'DirecciÃ³n 4', 'cliente4@example.com'),
+    (555555555, 'fisica', 'Cliente 5', 'DirecciÃ³n 5', 'cliente5@example.com');
 
 -- Crear tabla de facturas
 
 CREATE TABLE Factura(
 numero_factura INT NOT NULL IDENTITY(1,1) CONSTRAINT numero_factura PRIMARY KEY,
 cedulacl INT NOT NULL CHECK (cedulacl >=0) ,  
+fecha DATE NOT NULL, 
 precio_pact INT NOT NULL,
 cantidad INT NOT NULL,
 impuesto INT NOT NULL CHECK (impuesto >=0 AND impuesto <= 100) ,
@@ -172,13 +173,13 @@ descuento INT NOT NULL CHECK (descuento >=0 AND descuento <= 100) ,
 -- Insertar registros a la tabla
 
 
-INSERT INTO Factura (cedulacl, precio_pact, cantidad, impuesto, descuento)
+INSERT INTO Factura (cedulacl, fecha, precio_pact, cantidad, impuesto, descuento)
 VALUES
-    (111111111, 1000, 5, 13, 5),
-    (222222222, 500, 2, 10, 2),
-    (333333333, 750, 3, 15, 3),
-    (444444444, 2000, 10, 20, 5),
-    (555555555, 1500, 5, 12, 4);
+    (111111111, '2023-09-12', 1000, 5, 13, 5),
+    (222222222, '2023-07-11', 500, 2, 10, 2),
+    (333333333, '2023-09-10', 750, 3, 15, 3),
+    (444444444, '2023-09-09', 2000, 10, 20, 5),
+    (555555555, '2023-06-08', 1500, 5, 12, 4);
 
 -- Crear tabla de productos
 
@@ -230,4 +231,5 @@ INSERT INTO ProductoFactura (numero_factura, id_universal, cantidad)
 VALUES
     (2, 3, 1), -- Producto 3, cantidad 1
     (2, 4, 5), -- Producto 4, cantidad 5
-	(3, 5, 2); -- Producto 5, cantidad 2
+    (3, 5, 2); -- Producto 5, cantidad 2
+
