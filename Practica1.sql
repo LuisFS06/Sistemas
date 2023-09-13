@@ -38,7 +38,7 @@ VALUES
 -- Provincia de Guanacaste
 
     ('Guanacaste', 'Liberia', 'Mayorga'),
-    ('Guanacaste', 'Liberia', 'Cañas Dulces'),
+    ('Guanacaste', 'Nicoya', 'Nosara'),
 
 
 -- Provincia de Puntarenas
@@ -50,7 +50,7 @@ VALUES
 -- Provincia de Limon
 
     ('Limon', 'Limón', 'Matama'),
-    ('Limon', 'Limón', 'Valle La Estrella');
+    ('Limon', 'Talamanca', 'Cahuita');
 
 -- Crear Tabla de proveedores
 
