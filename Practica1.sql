@@ -1,6 +1,9 @@
-CREATE DATABASE practica;
+-- Creacion de la base de datos
+CREATE DATABASE practica
+GO	
+
 USE practica;
-GO
+
 
 -- Crear tabla de territorios
 
