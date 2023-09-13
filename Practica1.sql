@@ -1,3 +1,4 @@
+CREATE DATABASE practica;
 USE practica;
 GO
 
