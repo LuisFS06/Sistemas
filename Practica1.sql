@@ -38,7 +38,7 @@ VALUES
 -- Provincia de Guanacaste
 
     ('Guanacaste', 'Liberia', 'Mayorga'),
-    ('Guanacaste', 'Nicoya', 'Nosara'),
+    ('Guanacaste', 'Liberia', 'Cañas Dulces'),
 
 
 -- Provincia de Puntarenas
@@ -50,7 +50,7 @@ VALUES
 -- Provincia de Limon
 
     ('Limon', 'Limón', 'Matama'),
-    ('Limon', 'Talamanca', 'Cahuita');
+    ('Limon', 'Limón', 'Valle La Estrella');
 
 -- Crear Tabla de proveedores
 
@@ -60,19 +60,17 @@ tipoced CHAR(40) NOT NULL CHECK (tipoced IN ('juridica', 'fisica')),
 nombre CHAR(40) NOT NULL,
 correo CHAR(40) NOT NULL,
 telefono INT NOT NULL,
-id_territorio INT NOT NULL,
-    FOREIGN KEY (id_territorio) REFERENCES Territorio(id_territorio)
 )
 
 -- Insertar registros a la tabla
 
-INSERT INTO Proveedor (cedula, tipoced, nombre, correo, telefono, id_territorio)
+INSERT INTO Proveedor (cedula, tipoced, nombre, correo, telefono)
 VALUES
-    (123456789, 'juridica', 'Proveedor 1', 'proveedor1@example.com', 12345678, 1),
-    (987654320, 'fisica', 'Proveedor 2', 'proveedor2@example.com', 87654321, 2),
-    (555555555, 'juridica', 'Proveedor 3', 'proveedor3@example.com', 55555555, 3),
-    (999999999, 'fisica', 'Proveedor 4', 'proveedor4@example.com', 99999999, 3),
-    (888888888, 'fisica', 'Proveedor 5', 'proveedor5@example.com', 88888888, 8);
+    (123456789, 'juridica', 'Proveedor 1', 'proveedor1@example.com', 12345678),
+    (987654320, 'fisica', 'Proveedor 2', 'proveedor2@example.com', 87654321),
+    (555555555, 'juridica', 'Proveedor 3', 'proveedor3@example.com', 55555555),
+    (999999999, 'fisica', 'Proveedor 4', 'proveedor4@example.com', 99999999),
+    (888888888, 'fisica', 'Proveedor 5', 'proveedor5@example.com', 88888888);
 
 -- Tabla Intermedia territorio-proveedor
 
@@ -83,8 +81,6 @@ CREATE TABLE TerritorioProveedor (
     FOREIGN KEY (territorio_id) REFERENCES Territorio(id_territorio),
     FOREIGN KEY (proveedor_cedula) REFERENCES Proveedor(cedula)
 );
-
--- Insertar registros a la tabla
 
 -- Insertar registros en la tabla intermedia TerritorioProveedor
 INSERT INTO TerritorioProveedor (territorio_id, proveedor_cedula)
@@ -176,10 +172,10 @@ descuento INT NOT NULL CHECK (descuento >=0 AND descuento <= 100) ,
 INSERT INTO Factura (cedulacl, fecha, precio_pact, cantidad, impuesto, descuento)
 VALUES
     (111111111, '2023-09-12', 1000, 5, 13, 5),
-    (222222222, '2023-07-11', 500, 2, 10, 2),
+    (222222222, '2023-09-11', 500, 2, 10, 2),
     (333333333, '2023-09-10', 750, 3, 15, 3),
     (444444444, '2023-09-09', 2000, 10, 20, 5),
-    (555555555, '2023-06-08', 1500, 5, 12, 4);
+    (555555555, '2023-09-08', 1500, 5, 12, 4);
 
 -- Crear tabla de productos
 
@@ -231,5 +227,25 @@ INSERT INTO ProductoFactura (numero_factura, id_universal, cantidad)
 VALUES
     (2, 3, 1), -- Producto 3, cantidad 1
     (2, 4, 5), -- Producto 4, cantidad 5
-    (3, 5, 2); -- Producto 5, cantidad 2
+	(2, 5, 2); -- Producto 5, cantidad 2
+
+-- Factura 3
+INSERT INTO ProductoFactura (numero_factura, id_universal, cantidad)
+VALUES
+    (3, 4, 5), -- Producto 4, cantidad 5
+	(3, 2, 1); -- Producto 2, cantidad 1
+
+-- Factura 4
+INSERT INTO ProductoFactura (numero_factura, id_universal, cantidad)
+VALUES
+    (4, 3, 1), -- Producto 3, cantidad 1
+	(4, 5, 2); -- Producto 5, cantidad 2
+
+-- Factura 5
+INSERT INTO ProductoFactura (numero_factura, id_universal, cantidad)
+VALUES
+    (5, 4, 5), -- Producto 4, cantidad 5
+	(5, 1, 1); -- Producto 1, cantidad 2
+
+
 
